@@ -1,4 +1,3 @@
-
 # Terminal Environment
 
 ## Commands
@@ -21,59 +20,7 @@ or
 
     ctrl + L
 
-## Navegation
-
-go to the root directory
-
-```bash
-cd
-```
-
-go to the directory
-
-```bash
-cd <directory>
-```
-
-move one directory up
-```bash
-cd .. 
-```
-
-move to your previous directory
-
-```bash
-cd -
-```
-
-### ls: List files
-
-Mostra arquivos no diretório atual
-```bash
-ls
-```
-
-will list all the files in the sub-directories as well
-```bash
-ls -R
-```
-
-show all files, even the hidden files
-```bash
-ls -a
-```
-
-will list the files and directories with detailed information like the permissions, size, owner, etc.
-```bash
-ls -al
-```
-
-list files with sizes
-```bash
-ls -lh
-```
-
-## Aliases
+### alias
 
 Aliases permits custom definitions. Typing alias with no arguments gives the list of defined aliases. unalias gets rid of an alias.
 
@@ -93,24 +40,106 @@ alias rm=’rm -i’
 alias atualiza='sudo apt-get update && sudo apt-get upgrade'
 ```
 
-## & operator
+### & operator
 
 With & the process starts in the background, so you can continue to use the shell and do not have to wait until the script is finished. If you forget it, you can stop the current running process with Ctrl-Z
 
+**Example**
+
+Opens firefox, but keeps the shell available
+```bash
+firefox &
+```
+
+## Navegation
+
+### cd
+
+go to the root directory
+
+```bash
+cd
+```
+
+go to the directory
+
+```bash
+cd <directory>
+```
+
+move one directory up
+```bash
+cd ..
+```
+
+move to your previous directory
+
+```bash
+cd -
+```
+
+### ls
+
+List files in the current directory
+```bash
+ls
+```
+
+List all the files in the sub-directories as well
+```bash
+ls -R
+```
+
+List all files, even the hidden files
+```bash
+ls -a
+```
+
+List the files and directories with detailed information like the permissions, size, owner, etc.
+```bash
+ls -al
+```
+
+List files with sizes
+```bash
+ls -lh
+```
+
+### tree
+
+Shows a visual tree of files and directories hierachy
+
+Not installed by default. Must be installed using:
+
+```bash
+sudo apt-get install tree 
+```
+
+Displays a visual tree of all files and directories above the current
+
+```bash
+tree
+```
+
+Displays a visual tree above the directory, limiting the depth
+
+```bash
+tree -L <max_depth>
+```
+
 # Files
 
+## Text manipulation
 
-### cat: Type out (concatenate) the files
+### cat
 
-cat is short for concatenate and is one of the most frequently used Linux command line utilities. It is often used to read and print files, as well as for simply viewing file contents. To view a file, use the following command:
+Used to viewing file contents
 
 ```bash
 cat <filename>
 ```
 
-For example, cat readme.txt will display the contents of readme.txt on the terminal. However, the main purpose of cat is often to combine (concatenate) multiple files together. You can perform the actions listed in the table using cat.
-
-Concatenate multiple files and display the output; i.e. the entire content of the first file is followed by that of the second file
+Combine contents of multiple files
 
 ```bash
 cat file1 file2
@@ -140,7 +169,7 @@ Any subsequent lines are appended to the file, until Ctrl-D is typed
 cat >> file
 ```
 
-The tac command (cat spelled backwards) prints the lines of a file in reverse order. Each line remains the same, but the order of lines is inverted. The syntax of tac is exactly the same as for cat, as in:
+The tac command prints the lines of a file in reverse order. Each line remains the same, but the order of lines is inverted. The syntax of tac is the same as for cat
 
 ```bash
 tac file
@@ -176,9 +205,7 @@ echo $variable
 
 ### less
 
-Look at the file, one screenful at a time
-
-displays the content of a file partially and allows for easy navigation through the text. It keeps the terminal output clean and loads files quickly, as it only loads the current text on the screen.
+Displays the content of a file partially and allows for easy navigation through the text. It keeps the terminal output clean and loads files quickly, as it only loads the current text on the screen
 
 ```bash
 less <filename>
@@ -212,6 +239,24 @@ To display the **n** last lines:
 tail -n <number of lines> <filename>
 ```
 
+### strings
+
+Looks for printable strings in a file. A string is any sequence of 4 or more printable characters that end with a new-line or a null character. Useful in locating human-readable content embedded in binary files
+
+Show the printable content of a file
+
+```bash
+strings <filename>
+```
+
+Filtering the result with grep
+
+```bash
+strings <filename> | grep <search_string>
+```
+
+## Files manipulation
+
 ### rm
 
 Remove files
@@ -219,7 +264,7 @@ Remove files
 deleta arquivo
 
 ```bash
-rm "arquivo"
+rm <filename>
 ```
 
 remove an empty directory  
@@ -236,19 +281,13 @@ rm -r dirname
 
 ### mv
 
-Rename (move) files
+Used for move and rename
+
+Move o arquivo do diretório atual para o diretório especificado
 
 ```bash
-mv file.txt /home/username/Pictures Move o arquivo do diretório atual para o diretório especificado
+mv file.txt /home/username/Pictures
 ```
-
-renomeia o arquivo
-
-```bash
-mv oldname.ext newname.ext
-```
-
-mv is used for move and rename
 
 Rename a file or folder
 
@@ -270,7 +309,11 @@ mv file1 ..
 
 ### cp
 
-cp file.txt /home/username/Pictures Copia o arquivo do diretório atual para o diretório especificado
+Copia o arquivo do diretório atual para o diretório especificado
+
+```bash
+cp file.txt /home/username/Pictures 
+```
 
 ### mkdir
 
@@ -296,7 +339,11 @@ Create symbolic and hard links
 
 Either create an empty file, or update the file modification time
 
-touch "arquivo.txt" Cria arquivo
+Cria arquivo
+
+```bash
+touch "arquivo.txt"
+```
 
 ### wc
 
@@ -314,9 +361,7 @@ xz, unxz, xzcat
 
 ## Viewing Compressed Files
 
-When working with compressed files, many standard commands cannot be used directly. For many commonly-used file and text manipulation programs, there is also a version especially designed to work directly with compressed files. These associated utilities have the letter "z" prefixed to their name. For example, we have utility programs such as zcat, zless, zdiff and zgrep.
-
-Here is a table listing some z family commands:
+When working with compressed files, many standard commands cannot be used directly
 
 To view a compressed file
 
@@ -364,9 +409,9 @@ cd, chroot, df, dirs, du, fdisk, fsck, fuser, ln, ls, mkdir, mv, pushd, popd, rm
 
 ### Find
 
-The find command line utility provides an extremely powerful and flexible method for locating files based on their properties, including name. It does not search the interior of files for patterns, etc.; that is more the province of **grep** and its variations, which we will discuss later.
+Used for locating files based on their properties, including name. It does not search the content
 
-The general form of a **find** command is:
+The general form of the command is:
 
 ```bash
 find [location] [criteria] [actions]
@@ -444,37 +489,61 @@ It will show only line with the content
 ls -l *.ps | grep May
 ```
 
-grep blue notepad.txt procura "blue" no arquivo texto
-
-|  |  |
-|--|--|
-|  |  |
-
-**grep** is a workhorse command line utility whose basic job is to search files for patterns and print out matches according to specified options.
-
-Its name stands for global regular expression print, which points out that it can do more than just match simple strings; it can work with more complicated regular expressions which can contain wildcards and other special attributes.
-
-The simplest example of using **grep** would be:
+Search for a pattern in a file and print all matching lines
 
 ```bash
-$ grep pig file
-
-pig food
-pig
-dirty pig
+grep [pattern] <filename>
 ```
 
-which finds three instances of the string "pig" in file.
+Print all lines that do not match the pattern
 
-As an example:
+```bash
+grep -v [pattern] <filename> 
+```
+
+Print the lines that contain the numbers 0 through 9
+
+```bash
+grep [0-9] <filename>
+```
+
+Print context of lines (specified number of lines above and below the pattern) for matching the pattern; here, the number of lines is specified as 3
+
+```bash
+grep -C 3 [pattern] <filename>
+```
+
+some of the most important options are:
+
+**-i**     Ignore case
+
+**-v**    Invert match
+
+**-n**    Print line number
+
+**-H**    Print filename
+
+**-a**    Treat binary files as text
+
+**-I**    Ignore binary files
+
+**-r**    Recurse through subdirectories
+
+**-l**    Print out names of all files that contain matches
+
+**-L**    Print out names of all files that do not contain matches
+
+**-c**    Print out number of matching lines only
+
+**-e**    Use the following pattern; useful for multiple strings and special characters
+
+**Examples**
+
+search all files in the current directory and those below it for the strings "pig" or "dog", ignoring case
 
 ```bash
 grep  -i  -e pig -e dog -r .
 ```
-
-will search all files in the current directory and those below it for the strings "pig" or "dog", ignoring case.
-
-If we try to explore the use of regular expressions in detail, it would be a large topic, but here are some examples:
 
 print all lines that end with "dog"
 
@@ -500,56 +569,6 @@ Find all entries in **/etc/services** that include the string **ftp** and restri
 grep ftp /etc/services | grep tcp
 ```
 
-**grep** has many options; some of the most important are:
-
-Option
-
-Meaning
-
-**-i**
-
-Ignore case
-
-**-v**
-
-Invert match
-
-**-n**
-
-Print line number
-
-**-H**
-
-Print filename
-
-**-a**
-
-Treat binary files as text
-
-**-I**
-
-Ignore binary files
-
-**-r**
-
-Recurse through subdirectories
-
-**-l**
-
-Print out names of all files that contain matches
-
-**-L**
-
-Print out names of all files that do not contain matches
-
-**-c**
-
-Print out number of matching lines only
-
-**-e**
-
-Use the following pattern; useful for multiple strings and special characters
-
 ### sed
 
 useful to make substitutions and other modifications in files and in streamed output.
@@ -565,7 +584,6 @@ or
 ```bash
 sed s:pattern:replace_string: file
 ```
-
 
 Substitute all string occurrences in every line
 
@@ -596,7 +614,6 @@ cat file | sed s/pattern/replace_string/g > newfile
 ```
 
 If you want to make multiple simultaneous substitutions, you need to use the **-e** option, as in:
-
 
 ```bash
 $ sed  -e s/"pig"/"cow"/g -e s/"dog"/"cat"/g < file > newfile
@@ -640,41 +657,65 @@ sed -f scriptfile <filename>
 
 The -e command option allows you to specify multiple editing commands simultaneously at the command line. It is unnecessary if you only have one operation invoked.
 
-### awk
+### tr
 
-As with sed, short awk commands can be specified directly at the command line, but a more complex script can be saved in a file that you can specify using the -f option.
-
-Specify a command directly at the command line
+Deletes or substitutes characters from standard input and writes the result to standard output. It can't read a file directly, so it is often used with pipes (|) and redirects (>>)
 
 ```bash
-awk 'command'  file
-```
-
-Specify a file that contains the script to be executed
-
-```bash
-awk -f scriptfile file
+tr [options] set1 [set2]
 ```
 
 **Examples**
 
-Print entire file
+Translate braces into brackets, type:
 
 ```bash
-awk '{ print $0 }' /etc/passwd
+tr '{}' '\[]' < textfile > newfile
 ```
 
-Print first field (column) of every line, separated by a space
+Translate lowercase characters to uppercase
 
 ```bash
-awk -F: '{ print $1 }' /etc/passwd
+tr 'a-z' 'A-Z' < textfile > newfile
 ```
 
-Print first and seventh field of every line
+or
 
 ```bash
-awk -F: '{ print $1 $7 }' /etc/passwd 
+cat linux.txt | tr [:lower:] [:upper:] > output.txt
 ```
+
+**SET**
+
+Represents strings of characters. The command accepts the following interpreted sequences for character matching:
+
+|Sequence  |Interpretation  |
+|---------|---------|
+| \NNN    | Characters with the NNN octal value (1 to 3 octal digits)
+| \\    | Backslash        |
+| \a    | An audible bell character        |
+| \b | Backspace |
+| \f | Form feed |
+| \n | Newline character |
+| \r | Return character |
+| \t | Horizontal tab |
+| \v | Vertical tab |
+| CHAR1-CHAR2 | All characters from CHAR1 to CHAR2 in an ascending order |
+| [CHAR*] | Copies CHAR* in SET2 up to the length of SET1 |
+| [CHAR*REPEAT] | Repeats copies of CHAR Repeats octal if starting with 0 |
+| [:alnum:] | All letters and digits |
+| [:alpha:] | All letters |
+| [:blank:] | Horizontal whitespaces |
+| [:cntrl:] | All control characters |
+| [:digit:] | All digits |
+| [:graph:] | Printable characters, excluding space |
+| [:lower:] | All lowercase characters |
+| [:print:] | Printable characters, including space |
+| [:punct:] | All punctuation characters |
+| [:space:] | Horizontal or vertical whitespace characters |
+| [:upper:] | All uppercase letters |
+| [:xdigit:] | Hexadecimal digits |
+| [=CHAR=]	 |  characters equivalent to CHAR |
 
 ### sort and uniq
 
@@ -902,8 +943,6 @@ sudo lshw -short - resumed hardware information
 
 [https://en.wikipedia.org/wiki/Syslog](https://en.wikipedia.org/wiki/Syslog)
 
-# Outros
-
 # Sistema
 
 pwd show current directory
@@ -926,22 +965,6 @@ Comando + tecla tab: permite escolher entre os arquivos do diretório. Se já co
 
 [https://www.cyberciti.biz/faq/howto-compile-and-run-c-cplusplus-code-in-linux/](https://www.cyberciti.biz/faq/howto-compile-and-run-c-cplusplus-code-in-linux/)
 
-```bash
-cat > myfile.txt
-```
-
-Now, just type whatever you want in the file:
-
-Hello World!
-
-CTRL-D to save and exit
-
-tree
-
-Sudo apt install tree
-
-Shows a visual tree of files and directories hierachy
-
 Networking
 
 arp, domainname, finger, ftp, host, hostname, ip, route, ifconfig, netstat
@@ -953,3 +976,41 @@ at, atrm, batch, crontab, exec, exit, ipcs, ipcrm, kill, killall
 Expression Evaluation
 
 bc, dc, eval, expr, factor, false, true
+
+# Outros
+
+### awk
+
+As with sed, short awk commands can be specified directly at the command line, but a more complex script can be saved in a file that you can specify using the -f option.
+
+Specify a command directly at the command line
+
+```bash
+awk 'command'  file
+```
+
+Specify a file that contains the script to be executed
+
+```bash
+awk -f scriptfile file
+```
+
+**Examples**
+
+Print entire file
+
+```bash
+awk '{ print $0 }' /etc/passwd
+```
+
+Print first field (column) of every line, separated by a space
+
+```bash
+awk -F: '{ print $1 }' /etc/passwd
+```
+
+Print first and seventh field of every line
+
+```bash
+awk -F: '{ print $1 $7 }' /etc/passwd 
+```
