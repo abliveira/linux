@@ -129,7 +129,7 @@ tree -L <max_depth>
 
 # Files
 
-## Text manipulation
+## Text output
 
 ### cat
 
@@ -203,9 +203,25 @@ The contents of the specified environment variable are displayed
 echo $variable
 ```
 
+### tee
+
+reads standard input (stdin) and writes it to both standard output (stdout) and one or more files. Works as `> newfile_name`, but with more options
+
+```bash
+[command] | tee [options] [filename]
+```
+
+**Example**
+
+List the contents of a directory on the screen and save the output to a file
+
+```bash
+ls -l | tee newfile
+```
+
 ### less
 
-Displays the content of a file partially and allows for easy navigation through the text. It keeps the terminal output clean and loads files quickly, as it only loads the current text on the screen
+Displays the content of a file partially and allows for easy navigation through the text. Keeps the terminal clean and loads files quickly, as it only loads the current text on the screen
 
 ```bash
 less <filename>
@@ -255,319 +271,7 @@ Filtering the result with grep
 strings <filename> | grep <search_string>
 ```
 
-## Files manipulation
-
-### rm
-
-Remove files
-
-deleta arquivo
-
-```bash
-rm <filename>
-```
-
-remove an empty directory  
-
-```bash
-rm -d dirname ou rmdir dirname
-```
-
-remove non-empty directories and all the files within them
-
-```bash
-rm -r dirname
-```
-
-### mv
-
-Used for move and rename
-
-Move o arquivo do diretório atual para o diretório especificado
-
-```bash
-mv file.txt /home/username/Pictures
-```
-
-Rename a file or folder
-
-```bash
-mv file1 file2
-```
-
-move a file to a subfolder
-
-```bash
-mv file1 folder1
-```
-
-move a file to upperfolder
-
-```bash
-mv file1 ..
-```
-
-### cp
-
-Copia o arquivo do diretório atual para o diretório especificado
-
-```bash
-cp file.txt /home/username/Pictures 
-```
-
-### mkdir
-
-Create directories
-
-```bash
-mkdir Music/Newfile
-```
-
-### rmdir
-
-Remove directories
-
-### file
-
-Show file types
-
-### ln
-
-Create symbolic and hard links
-
-### touch
-
-Either create an empty file, or update the file modification time
-
-Cria arquivo
-
-```bash
-touch "arquivo.txt"
-```
-
-### wc
-
-Count lines, words, and bytes in a file
-
-## File Compression
-
-bunzip2, bzcat, bdiff, bzip2, bzless
-
-gunzip, gzexe, gzip, zcat, zless
-
-zip, upzip
-
-xz, unxz, xzcat
-
-## Viewing Compressed Files
-
-When working with compressed files, many standard commands cannot be used directly
-
-To view a compressed file
-
-```bash
-zcat compressed-file.txt.gz
-```
-
-To page through a compressed file
-
-```bash
-zless somefile.gz 
-
-zmore somefile.gz
-```
-
-To search inside a compressed file
-
-```bash
-zgrep -i less somefile.gz
-```
-
-To compare two compressed files
-
-```bash
-zdiff file1.txt.gz file2.txt.gz
-```
-
-Note that if you run zless on an uncompressed file, it will still work and ignore the decompression stage. There are also equivalent utility programs for other compression methods besides gzip.
-
-For example, we have bzcat and bzless associated with bzip2, and xzcat and xzless associated with xz.
-
-## File Ownership, Permissions and Attributes
-
-attr, chgrp, chown, chmod
-
-Files
-
-awk, basename, cat, col, cp, cpio, csplit, cut, dd, diff, dirname, egrep, expand, file, fgrep, fmt, grep, head, join, less, more, sed, tail, tar
-
-Filesystem
-
-cd, chroot, df, dirs, du, fdisk, fsck, fuser, ln, ls, mkdir, mv, pushd, popd, rm, rmdir
-
-## Search
-
-### Find
-
-Used for locating files based on their properties, including name. It does not search the content
-
-The general form of the command is:
-
-```bash
-find [location] [criteria] [actions]
-```
-
-where there are three classes of arguments, each of which may be omitted. If no location is given, the current directory **(.)** is assumed; if no criteria are given, all files are displayed; and, if no actions are given, only a listing of the names is given.
-
-There are many logical expressions which can be used for criteria. For example, the command:
-
-```bash
-find /etc -name  "*.conf"
-```
-
-will print out the names of all files in the **/etc** directory and its descendants, recursively, that end in **.conf**. To specify a simple action request:
-
-```bash
-find /etc -name  "*.conf"  -ls
-```
-
-will print out a long listing, not just the names.
-
-A little more complicated example is the following:
-
-```bash
-find /tmp /etc -name  "*.conf"  -or  -newer /tmp/.X0-lock  -ls
-```
-
-will look in subdirectories under **/etc** and **/tmp** for files whose names end in **.conf**, or are newer than **/tmp/.X0-lock** and print out a long listing.
-
-You can perform actions with the **-exec** option, as in:
-
-```bash
-find . -name  "*~"  -exec  rm {} ’;’
-```
-
-where **.** is used to specify the starting directory for the search, which in this context, it represents the current directory. **{}** is a fill in for the files to be operated on, and **’;’** indicates the end of the command. This can be unwieldy and one often pipes into the **xargs** program, as in:
-
-```bash
-find . -name  "*~" | xargs rm
-```
-
-which accomplishes the same action. A third way to do the same action would be:
-
-```bash
-for names in  $(find . -name "*~" ) ; do  rm  $names ; done
-```
-
-If a filename has a blank space in it (or some other special characters), some of the previous commands will fail.
-
-It is generally a disfavored practice to utilize such file names in UNIX-like operating systems, but it is not uncommon for such files to exist, either in files brought in from other systems, or from applications which are also used in other systems.
-
-In such a case, the following variant will work just fine:
-
-```bash
-find . -name  "*~"  -print0 | xargs -0  rm
-```
-
-as will the command that uses **-exec rm {} ’;’**.
-
-There are many options to **find**, especially regarding selection of files to display. This can be done based on size, time of creation or access, type of file, owner, etc. A quick synopsis is provided by **find --help**:
-
-### Grep
-
-Search inside files
-
-Can be used to filter a command, such as
-
-```bash
-| grep May
-```
-
-It will show only line with the content
-
-```bash
-ls -l *.ps | grep May
-```
-
-Search for a pattern in a file and print all matching lines
-
-```bash
-grep [pattern] <filename>
-```
-
-Print all lines that do not match the pattern
-
-```bash
-grep -v [pattern] <filename> 
-```
-
-Print the lines that contain the numbers 0 through 9
-
-```bash
-grep [0-9] <filename>
-```
-
-Print context of lines (specified number of lines above and below the pattern) for matching the pattern; here, the number of lines is specified as 3
-
-```bash
-grep -C 3 [pattern] <filename>
-```
-
-some of the most important options are:
-
-**-i**     Ignore case
-
-**-v**    Invert match
-
-**-n**    Print line number
-
-**-H**    Print filename
-
-**-a**    Treat binary files as text
-
-**-I**    Ignore binary files
-
-**-r**    Recurse through subdirectories
-
-**-l**    Print out names of all files that contain matches
-
-**-L**    Print out names of all files that do not contain matches
-
-**-c**    Print out number of matching lines only
-
-**-e**    Use the following pattern; useful for multiple strings and special characters
-
-**Examples**
-
-search all files in the current directory and those below it for the strings "pig" or "dog", ignoring case
-
-```bash
-grep  -i  -e pig -e dog -r .
-```
-
-print all lines that end with "dog"
-
-```bash
-grep  "dog$" file
-```
-
-print all lines that end with "dog"
-
-```bash
-grep d[a-p] file
-```
-
-print all lines that start with "dog"
-
-```bash
-grep  "^dog" file
-```
-
-Find all entries in **/etc/services** that include the string **ftp** and restrict to those that use the **tcp** protocol:
-
-```bash
-grep ftp /etc/services | grep tcp
-```
+## Text manipulation
 
 ### sed
 
@@ -808,6 +512,343 @@ Split file based on number of lines.
 ```bash
 split -l <number_of_lines> file.txt <split_file_prefix>
 ```
+
+### wc
+
+Counts the number of lines, words, and characters in a file or list of files
+Option
+
+```bash
+wc [options] [file]
+```
+
+**–l**    Displays the number of lines
+
+**-c**    Displays the number of bytes
+
+**-w**    Displays the number of words
+
+**Example**
+
+Counts only in header files
+
+```bash
+wc *.h
+```
+
+## Files manipulation
+
+### rm
+
+Remove files
+
+deleta arquivo
+
+```bash
+rm <filename>
+```
+
+remove an empty directory  
+
+```bash
+rm -d dirname ou rmdir dirname
+```
+
+remove non-empty directories and all the files within them
+
+```bash
+rm -r dirname
+```
+
+### mv
+
+Used for move and rename
+
+Move o arquivo do diretório atual para o diretório especificado
+
+```bash
+mv file.txt /home/username/Pictures
+```
+
+Rename a file or folder
+
+```bash
+mv file1 file2
+```
+
+move a file to a subfolder
+
+```bash
+mv file1 folder1
+```
+
+move a file to upperfolder
+
+```bash
+mv file1 ..
+```
+
+### cp
+
+Copia o arquivo do diretório atual para o diretório especificado
+
+```bash
+cp file.txt /home/username/Pictures 
+```
+
+### mkdir
+
+Create directories
+
+```bash
+mkdir Music/Newfile
+```
+
+### rmdir
+
+Remove directories
+
+### file
+
+Show file types
+
+### ln
+
+Create symbolic and hard links
+
+### touch
+
+Either create an empty file, or update the file modification time
+
+Cria arquivo
+
+```bash
+touch "arquivo.txt"
+```
+
+### wc
+
+Count lines, words, and bytes in a file
+
+## Search
+
+### Find
+
+Used for locating files based on their properties, including name. It does not search the content
+
+The general form of the command is:
+
+```bash
+find [location] [criteria] [actions]
+```
+
+where there are three classes of arguments, each of which may be omitted. If no location is given, the current directory **(.)** is assumed; if no criteria are given, all files are displayed; and, if no actions are given, only a listing of the names is given.
+
+There are many logical expressions which can be used for criteria. For example, the command:
+
+```bash
+find /etc -name  "*.conf"
+```
+
+will print out the names of all files in the **/etc** directory and its descendants, recursively, that end in **.conf**. To specify a simple action request:
+
+```bash
+find /etc -name  "*.conf"  -ls
+```
+
+will print out a long listing, not just the names.
+
+A little more complicated example is the following:
+
+```bash
+find /tmp /etc -name  "*.conf"  -or  -newer /tmp/.X0-lock  -ls
+```
+
+will look in subdirectories under **/etc** and **/tmp** for files whose names end in **.conf**, or are newer than **/tmp/.X0-lock** and print out a long listing.
+
+You can perform actions with the **-exec** option, as in:
+
+```bash
+find . -name  "*~"  -exec  rm {} ’;’
+```
+
+where **.** is used to specify the starting directory for the search, which in this context, it represents the current directory. **{}** is a fill in for the files to be operated on, and **’;’** indicates the end of the command. This can be unwieldy and one often pipes into the **xargs** program, as in:
+
+```bash
+find . -name  "*~" | xargs rm
+```
+
+which accomplishes the same action. A third way to do the same action would be:
+
+```bash
+for names in  $(find . -name "*~" ) ; do  rm  $names ; done
+```
+
+If a filename has a blank space in it (or some other special characters), some of the previous commands will fail.
+
+It is generally a disfavored practice to utilize such file names in UNIX-like operating systems, but it is not uncommon for such files to exist, either in files brought in from other systems, or from applications which are also used in other systems.
+
+In such a case, the following variant will work just fine:
+
+```bash
+find . -name  "*~"  -print0 | xargs -0  rm
+```
+
+as will the command that uses **-exec rm {} ’;’**.
+
+There are many options to **find**, especially regarding selection of files to display. This can be done based on size, time of creation or access, type of file, owner, etc. A quick synopsis is provided by **find --help**:
+
+### Grep
+
+Search inside files
+
+Can be used to filter a command, such as
+
+```bash
+| grep May
+```
+
+It will show only line with the content
+
+```bash
+ls -l *.ps | grep May
+```
+
+Search for a pattern in a file and print all matching lines
+
+```bash
+grep [pattern] <filename>
+```
+
+Print all lines that do not match the pattern
+
+```bash
+grep -v [pattern] <filename> 
+```
+
+Print the lines that contain the numbers 0 through 9
+
+```bash
+grep [0-9] <filename>
+```
+
+Print context of lines (specified number of lines above and below the pattern) for matching the pattern; here, the number of lines is specified as 3
+
+```bash
+grep -C 3 [pattern] <filename>
+```
+
+some of the most important options are:
+
+**-i**     Ignore case
+
+**-v**    Invert match
+
+**-n**    Print line number
+
+**-H**    Print filename
+
+**-a**    Treat binary files as text
+
+**-I**    Ignore binary files
+
+**-r**    Recurse through subdirectories
+
+**-l**    Print out names of all files that contain matches
+
+**-L**    Print out names of all files that do not contain matches
+
+**-c**    Print out number of matching lines only
+
+**-e**    Use the following pattern; useful for multiple strings and special characters
+
+**Examples**
+
+search all files in the current directory and those below it for the strings "pig" or "dog", ignoring case
+
+```bash
+grep  -i  -e pig -e dog -r .
+```
+
+print all lines that end with "dog"
+
+```bash
+grep  "dog$" file
+```
+
+print all lines that end with "dog"
+
+```bash
+grep d[a-p] file
+```
+
+print all lines that start with "dog"
+
+```bash
+grep  "^dog" file
+```
+
+Find all entries in **/etc/services** that include the string **ftp** and restrict to those that use the **tcp** protocol:
+
+```bash
+grep ftp /etc/services | grep tcp
+```
+
+## File Compression
+
+bunzip2, bzcat, bdiff, bzip2, bzless
+
+gunzip, gzexe, gzip, zcat, zless
+
+zip, upzip
+
+xz, unxz, xzcat
+
+## Viewing Compressed Files
+
+When working with compressed files, many standard commands cannot be used directly
+
+To view a compressed file
+
+```bash
+zcat compressed-file.txt.gz
+```
+
+To page through a compressed file
+
+```bash
+zless somefile.gz 
+
+zmore somefile.gz
+```
+
+To search inside a compressed file
+
+```bash
+zgrep -i less somefile.gz
+```
+
+To compare two compressed files
+
+```bash
+zdiff file1.txt.gz file2.txt.gz
+```
+
+Note that if you run zless on an uncompressed file, it will still work and ignore the decompression stage. There are also equivalent utility programs for other compression methods besides gzip.
+
+For example, we have bzcat and bzless associated with bzip2, and xzcat and xzless associated with xz.
+
+## File Ownership, Permissions and Attributes
+
+attr, chgrp, chown, chmod
+
+Files
+
+awk, basename, cat, col, cp, cpio, csplit, cut, dd, diff, dirname, egrep, expand, file, fgrep, fmt, grep, head, join, less, more, sed, tail, tar
+
+Filesystem
+
+cd, chroot, df, dirs, du, fdisk, fsck, fuser, ln, ls, mkdir, mv, pushd, popd, rm, rmdir
 
 ## Permissions
 
