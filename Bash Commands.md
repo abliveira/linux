@@ -105,6 +105,18 @@ List files with sizes
 ls -lh
 ```
 
+In the output of a detailed ls command, such as -al or -lh, the first character in the listing shows the type of file
+
+|Character  |Type  |
+|---------|---------|
+|Normal File     |-        |
+|Directory     |d         |
+|Symbolic link     |l         |
+|Named pipe (FIFO)     |p         |
+|Unix domain socket     |s         |
+|Block device node     |b         |
+|Character device node     |c         |
+
 ### tree
 
 Shows a visual tree of files and directories hierachy
@@ -542,8 +554,6 @@ wc *.h
 
 Remove files
 
-deleta arquivo
-
 ```bash
 rm <filename>
 ```
@@ -573,7 +583,7 @@ mv file.txt /home/username/Pictures
 Rename a file or folder
 
 ```bash
-mv file1 file2
+mv <filename> <new_filename>
 ```
 
 move a file to a subfolder
@@ -620,7 +630,7 @@ Create symbolic and hard links
 
 Either create an empty file, or update the file modification time
 
-Cria arquivo
+Creates the file
 
 ```bash
 touch "arquivo.txt"
@@ -644,7 +654,7 @@ find [location] [criteria] [actions]
 
 where there are three classes of arguments, each of which may be omitted. If no location is given, the current directory **(.)** is assumed; if no criteria are given, all files are displayed; and, if no actions are given, only a listing of the names is given.
 
-There are many logical expressions which can be used for criteria. For example, the command:
+There are many logical expressions which can be used for criteria. For example:
 
 ```bash
 find /etc -name  "*.conf"
@@ -658,7 +668,7 @@ find /etc -name  "*.conf"  -ls
 
 will print out a long listing, not just the names.
 
-A little more complicated example is the following:
+A more complicated example:
 
 ```bash
 find /tmp /etc -name  "*.conf"  -or  -newer /tmp/.X0-lock  -ls
@@ -700,7 +710,11 @@ There are many options to **find**, especially regarding selection of files to d
 
 ### Grep
 
-Search inside files
+Search for a pattern in a file and print all matching lines
+
+```bash
+grep [pattern] <filename>
+```
 
 Can be used to filter a command, such as
 
@@ -714,10 +728,16 @@ It will show only line with the content
 ls -l *.ps | grep May
 ```
 
-Search for a pattern in a file and print all matching lines
+Search all files on directories recursively
 
 ```bash
-grep [pattern] <filename>
+grep -r [pattern] <filename>
+```
+
+Show results also from non text files, such binaries
+
+```bash
+grep -a [pattern] <filename>
 ```
 
 Print all lines that do not match the pattern
@@ -856,7 +876,7 @@ cd, chroot, df, dirs, du, fdisk, fsck, fuser, ln, ls, mkdir, mv, pushd, popd, rm
 
 The root user account can change the group assigned to a file or directory by using the chgrp command.
 
-Example Usage:
+**Example**
 
 ```bash
 chgrp staff file1.txt
@@ -864,17 +884,13 @@ chgrp staff file1.txt
 chgrp –R staff /home/john
 ```
 
-Options:
-
 • -R : recursively changes the group of all files under the specified directory.
 
 ### chmod
 
-The root user account or the owner of the file or directory can
+The root user account or the owner of the file or directory can change the assigned permissions by using the chmod command
 
-change the assigned permissions by using the chmod command
-
-Example Usage:
+**Example**
 
 ```bash
 chmod 666 file1.txt
@@ -882,9 +898,7 @@ chmod 666 file1.txt
 chmod ug=rwx file1.txt
 ```
 
-Options:
-
-• -R : recursively changes the permissions of all files under the specified directory.
+-R : recursively changes the permissions of all files under the specified directory.
 
 0 --- No permissions
 
@@ -938,7 +952,7 @@ The setfacl command allows you to modify the permissions assigned to a file or d
 
 •o[ther]::perms
 
-Example Usage:
+**Example**
 
 •setfacl –m g:staff:rw file1.txt
 
@@ -954,7 +968,7 @@ Getfacl Command
 
 The getfacl command allows you to view the ACLs assigned to a file or directory
 
-Example Usage:
+**Example**
 
 •getfacl file1.txt
 
@@ -969,6 +983,26 @@ ACL allows you to apply a more specific set of permissions to a file ord irector
 ACL allows this without changing the base ownership and permissions of a file or directory
 
 ACL uses the same permission bits
+
+### umask
+
+Determines the settings of a mask that controls how file permissions are set for newly created files
+
+```bash
+umask [-p] [-S] [mask]
+```
+
+[mask]: The new permissions mask you are applying. By default, the mask is presented as a numeric (octal) value
+[-S]: Displays the current mask as a symbolic value
+[-p]: Displays the current mask along with the umask command, allowing it to be copied and pasted as a future input
+
+
+
+Set the default permissions with which the files/directories will be created
+
+```bash
+umask 543
+```
 
 # Hardware
 
@@ -994,14 +1028,6 @@ sudo reboot, sudo shutdown
 
 history returns the last used commands
 
-help commands:
-
-man Pages
-
-info
-
---help and help
-
 Comando + tecla tab: permite escolher entre os arquivos do diretório. Se já começou digitar, ele sugere de acordo
 
 [https://www.cyberciti.biz/faq/howto-compile-and-run-c-cplusplus-code-in-linux/](https://www.cyberciti.biz/faq/howto-compile-and-run-c-cplusplus-code-in-linux/)
@@ -1017,6 +1043,16 @@ at, atrm, batch, crontab, exec, exit, ipcs, ipcrm, kill, killall
 Expression Evaluation
 
 bc, dc, eval, expr, factor, false, true
+
+## Help commands
+
+help commands:
+
+man Pages
+
+info
+
+--help and help
 
 # Outros
 
