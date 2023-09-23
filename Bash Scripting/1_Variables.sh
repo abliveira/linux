@@ -54,8 +54,8 @@ read name
 echo "Hello "$name
 
 # Read a file
-echo -e "\nReading example_file.txt"
+echo -e "\nReading 1_Variables_input.txt"
 while read line
 do
   echo $line
-done < example_file.txt
+done < 1_Variables_input.txt
