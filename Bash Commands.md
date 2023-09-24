@@ -548,6 +548,14 @@ Counts only in header files
 wc *.h
 ```
 
+### diff
+
+Display the differences in files by comparing line by line
+
+```bash
+diff <filename1> <filename2>
+```
+
 ## Files manipulation
 
 ### rm
