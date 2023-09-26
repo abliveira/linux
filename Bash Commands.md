@@ -1,3 +1,52 @@
+# Table of Contents
+
+1. [Commands](#commands)</br>
+    1.1. [clear](#clear)</br>
+    1.2. [alias](#alias)</br>
+    1.3. [& operator](#&-operator)</br>
+2. [Navegation](#navegation)</br>
+    2.1. [cd](#cd)</br>
+    2.2. [ls](#ls)</br>
+    2.3. [tree](#tree)</br>
+3. [Text output](#text-output)</br>
+    3.1. [cat](#cat)</br>
+    3.2. [echo](#echo)</br>
+    3.3. [tee](#tee)</br>
+    3.4. [less](#less)</br>
+    3.5. [head](#head)</br>
+    3.6. [tail](#tail)</br>
+    3.7. [strings](#strings)</br>
+4. [Text manipulation](#text-manipulation)</br>
+    4.1. [sed](#sed)</br>
+    4.2. [tr](#tr)</br>
+    4.3. [sort and uniq](#sort-and-uniq)</br>
+    4.4. [paste, join and split](#paste,-join-and-split)</br>
+    4.5. [wc](#wc)</br>
+    4.6. [diff](#diff)</br>
+5. [Files manipulation](#files-manipulation)</br>
+    5.1. [rm](#rm)</br>
+    5.2. [mv](#mv)</br>
+    5.3. [cp](#cp)</br>
+    5.4. [mkdir](#mkdir)</br>
+    5.5. [rmdir](#rmdir)</br>
+    5.6. [file](#file)</br>
+    5.7. [ln](#ln)</br>
+    5.8. [touch](#touch)</br>
+    5.9. [wc](#wc-1)</br>
+6. [Search](#search)</br>
+    6.1. [Find](#find)</br>
+    6.2. [Grep](#grep)</br>
+7. [File Compression](#file-compression)</br>
+8. [Viewing Compressed Files](#viewing-compressed-files)</br>
+9. [File Ownership, Permissions and Attributes](#file-ownership,-permissions-and-attributes)</br>
+10. [Permissions](#permissions)</br>
+    10.1. [chgrp](#chgrp)</br>
+    10.2. [chmod](#chmod)</br>
+    10.3. [Linux ACL](#linux-acl)</br>
+    10.4. [umask](#umask)</br>
+11. [Help commands](#help-commands)</br>
+    11.1. [awk](#awk)</br>
+
 # Terminal Environment
 
 ## Commands
